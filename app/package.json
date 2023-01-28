@@ -9,8 +9,11 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "normalize.css": "^8.0.1",
     "url-loader": "^4.1.1",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vue-select": "^3.20.2",
+    "vue-svg-loader": "^0.16.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.15",
@@ -19,6 +22,8 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "sass": "^1.57.1",
+    "sass-loader": "^10.1.1",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
