@@ -89,6 +89,89 @@ export default {
 </style>
 
 <style lang="scss">
+// Buefy overrides
+
+.select select {
+  background: #020202 !important;
+}
+
+.select:not(.is-empty) select {
+  color: white !important;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  border-color: white !important;
+}
+
+.select:not(.is-multiple):not(.is-loading)::after {
+  font-family: "Font Awesome 5 Free";
+  content: "\f0d7"!important;
+  font-weight: 900;
+  color: white;
+  border: none!important;
+  transform: translateY(-50%)!important;
+  margin-top: 0!important;
+  height: auto!important;
+}
+
+.form-col .label {
+  color: #ffd701;
+  display: block;
+  font-size: 14px;
+  margin-bottom: 8px;
+  text-align: left;
+}
+
+.form-col .input {
+  border: 1.5px solid #7f8180;
+  background: none;
+  padding: 12px 28px 12px 18px !important;
+  border-radius: 25px;
+  width: 100%;
+  color: white;
+  height: auto;
+
+  &:active,
+  &:focus {
+    border-color: white;
+    background: none;
+  }
+}
+
+.form-col .input::placeholder {
+  color: #7f8180;
+}
+
+.autocomplete .dropdown-item {
+  white-space: unset !important;
+  text-align: left !important;
+  font-size: 12px;
+}
+
+.autocomplete .dropdown-content {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.b-radio.button {
+  background: #050505;
+  border: 1.5px solid #7f8180;
+  color: #7f8180;
+  transition: all 0.3s;
+}
+
+.b-radio.button.is-selected {
+  background-color: #ffd701!important;
+  color: #151516!important;
+  border-color: #ffd701!important;
+}
+
+.b-radio.button.is-selected.is-focused {
+  border-color: white!important;
+}
+
+// END OF Buefy overrides
+
 
 .form-row {
   display: flex;
@@ -103,77 +186,16 @@ export default {
   padding: 0 15px;
 }
 
-.f-input-group {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.f-input {
-  border: 1.5px solid #7F8180;
-  background: none;
-  padding: 10px 18px;
-  border-radius: 25px;
-  width: 100%;
-  color: white;
-
-  &:active, &:focus {
-    border-color: white;
-    background: none;
-  }
-}
-
-.f-label {
-  color: #FFD701;
-  display: block;
-  font-size: 14px;
-  margin-bottom: 8px;
-}
 
 .f-button {
   padding: 12px 50px;
   font-size: 16px;
-  background: #FFD701;
+  background: #ffd701;
   color: #151516;
   border-radius: 25px;
   margin: 0;
   border: 0;
 }
 
-.f-select {
-  flex: 0 0 100%;
-  width: 100%;
-}
 
-.f-select .vs__dropdown-toggle {
-  background: none;
-  padding: 8px 18px;
-  border-radius: 25px;
-  border: 1.5px solid #7F8180;
-}
-
-.f-select .vs__search::placeholder {
-  color: #7F8180;
-}
-
-.f-select .vs__actions {
-  padding-right: 14px;
-}
-
-.f-select .vs__selected {
-  color: white;
-}
-
-.f-select .vs__dropdown-menu {
-  background: #151516;
-  border: none;
-  color: white;
-  text-transform: lowercase;
-  font-variant: small-caps;
-}
-
-.f-select .vs__clear,
-.f-select .vs__open-indicator {
-  fill: white;
-}
 </style>
