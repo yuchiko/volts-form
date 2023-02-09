@@ -2,7 +2,7 @@
   <form>
     <div class="form-row">
       <div class="form-col">
-        <b-field label="Номінація / Коригування *" required>
+        <b-field label="Номінація / Коригування" required>
           <b-select
             v-model="order_type"
             placeholder="Оберіть тип заявки"
@@ -16,7 +16,7 @@
         </b-field>
       </div>
       <div class="form-col">
-        <b-field label="Місяць*">
+        <b-field label="Місяць">
           <b-select
             v-model="order_month"
             placeholder="Оберіть місяць"
@@ -34,7 +34,7 @@
         </b-field>
       </div>
       <div class="form-col">
-        <b-field label="Рік*">
+        <b-field label="Рік">
           <b-select
             v-model="order_year"
             placeholder="Оберіть рік"
@@ -48,91 +48,206 @@
         </b-field>
       </div>
     </div>
+    <div class="filled-row">
+      <div class="form-row">
+        <div>1</div>
+        <div>
+          <p>Назва ОСР: АТ «ВІННИЦЯОБЛЕНЕРГО»<br> Напруга: 2 класс / Група Б - ОБСЯГ: 123 кВт/місяць</p>
+          <a href="#">Змінити</a>
+        </div>
+      </div>
+    </div>
+    <div class="repeated-row">
+      <div class="form-row">
+        <div class="form-col form-col--full">
+          <b-field label="Назва ОСР">
+            <b-autocomplete
+              rounded
+              v-model="selectedOsr"
+              :open-on-focus="true"
+              :data="filteredOsr"
+              placeholder="Введіть і оберіть вашу ОСР"
+              icon-pack="fas"
+              icon-right="caret-down"
+              clearable
+              @select="(option) => (selected = option)"
+            >
+              <template #footer>
+                <a v-if="selectedOsr.length" @click="cleanOsrInput"
+                  ><span>Очистити поле вводу</span></a
+                >
+              </template>
+              <template #empty>Немає результатів по запиту</template>
+            </b-autocomplete>
+          </b-field>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-col">
+          <b-field
+            class="one-radio-group"
+            label="Напруга"
+            grouped
+            group-multiline
+          >
+            <b-radio-button
+              v-model="voltageType"
+              native-value="group_a"
+              type="is-light is-outlined"
+              expanded
+            >
+              <span>1 клас</span>
+            </b-radio-button>
+            <b-radio-button
+              v-model="voltageType"
+              native-value="group_b"
+              type="is-light is-outlined"
+              expanded
+            >
+              <span>2 клас</span>
+            </b-radio-button>
+          </b-field>
+        </div>
+        <div class="form-col">
+          <b-field class="one-radio-group" label="Група" grouped group-multiline>
+            <b-radio-button
+              v-model="groupType"
+              native-value="group_a"
+              type="is-light is-outlined"
+              expanded
+            >
+              <span>Група А</span>
+            </b-radio-button>
+            <b-radio-button
+              v-model="groupType"
+              native-value="group_b"
+              type="is-light is-outlined"
+              expanded
+            >
+              <span>Група Б</span>
+            </b-radio-button>
+          </b-field>
+        </div>
+        <div class="form-col input-with-prefix">
+          <b-field label="Обсяг">
+            <b-input
+              name="amount"
+              v-model="amount.value"
+              placeholder="ХХХ ХХХ"
+            ></b-input>
+            <p class="control">
+              <span class="button is-static input-prefix input-prefix--after"
+                >кВт/місяць</span
+              >
+            </p>
+          </b-field>
+        </div>
+      </div>
+    </div>
     <div class="form-row">
       <div class="form-col">
-        <b-field label="Назва ОСР*">
-          <b-autocomplete
-            rounded
-            v-model="osr_name"
-            :open-on-focus="true"
-            :data="osrArray"
-            placeholder="Введіть і оберіть вашу ОСР"
-            icon="magnify"
-            icon-right="caret-down"
-            @select="(option) => (selected = option)"
+          <b-field
+            class="one-radio-group"
+            label="Тип організації"
+            grouped
+            group-multiline
           >
-            <template #empty>Немає результатів по запиту</template>
-          </b-autocomplete>
+            <b-radio-button
+              v-model="organizationType"
+              native-value="legal_person"
+              type="is-light is-outlined"
+              expanded
+            >
+              <span>Юр. особа</span>
+            </b-radio-button>
+            <b-radio-button
+              v-model="organizationType"
+              native-value="physic_person"
+              type="is-light is-outlined"
+              expanded
+            >
+              <span>ФОП</span>
+            </b-radio-button>
+          </b-field>
+        </div>
+      <div class="form-col">
+        <b-field :label="organizationType === 'legal_person' ? 'ЄДРПОУ' : 'ІПН'">
+          <b-input v-model="identify_code" placeholder="x_x_x_x_x_x_x_x"></b-input>
         </b-field>
       </div>
       <div class="form-col">
-        <b-field label="Група *" grouped group-multiline>
-          <b-radio-button
-            v-model="groupType"
-            native-value="group_a"
-            type="is-light is-outlined"
-            expanded
-          >
-            <span>Група А</span>
-          </b-radio-button>
-          <b-radio-button
-            v-model="groupType"
-            native-value="group_b"
-            type="is-light is-outlined"
-            expanded
-          >
-            <span>Група Б</span>
-          </b-radio-button>
-        </b-field>
-      </div>
-      <div class="form-col">
-        <b-field label="Обсяг *">
-          <b-input v-model="amount" placeholder="ХХХ ХХХ кВт/місяць"></b-input>
+        <b-field label="Код безпеки">
+          <b-input v-model="security_code" placeholder="хххххххх"></b-input>
         </b-field>
       </div>
     </div>
     <div class="form-row">
       <div class="form-col">
-        <b-field label="ЄДРПОУ / ІПН*">
-          <b-input v-model="identify_code" placeholder="хххххххх"></b-input>
-        </b-field>
-      </div>
-      <div class="form-col">
-        <b-field label="Код безпеки*">
-          <b-input v-model="security_code" placeholder="хххххххх"></b-input>
-        </b-field>
-      </div>
-      <div class="form-col">
+        <b-checkbox />
         <button class="f-button" @click="onSubmit">Відправити</button>
       </div>
     </div>
   </form>
 </template>
 <script>
+import Cleave from "cleave.js";
+
+/**
+ * We add a new instance of Cleave when the element
+ * is bound and destroy it when it's unbound.
+ */
+const cleave = {
+  name: "cleave",
+  bind(el, binding) {
+    const input = el.querySelector("input");
+    input._vCleave = new Cleave(input, binding.value);
+  },
+  unbind(el) {
+    const input = el.querySelector("input");
+    input._vCleave.destroy();
+  },
+};
+
 export default {
   name: "MonthlyForm",
+  directives: { cleave },
   data: () => ({
+    masks: {
+      numeral: {
+        numeral: true,
+        numeralThousandsGroupStyle: "none",
+        prefix: " кВт/місяць",
+        tailPrefix: true,
+        noImmediatePrefix: true,
+        // prefix: "$ ",
+      },
+    },
     order_type: null,
     order_month: null,
     order_year: null,
     groupType: null,
     identify_code: null,
     security_code: null,
-    amount: null,
-    osr_name: null,
+    organizationType: 'legal_person',
+    amount: {
+      value: null,
+      rawValue: null,
+    },
+    selectedOsr: "",
+    voltageType: null,
     months: [
-      { label: "січень", code: "01" },
-      { label: "лютий", code: "02" },
-      { label: "березень", code: "03" },
-      { label: "квітень", code: "04" },
-      { label: "травень", code: "05" },
-      { label: "червень", code: "06" },
-      { label: "липень", code: "07" },
-      { label: "серпень", code: "08" },
-      { label: "вересень", code: "09" },
-      { label: "жовтень", code: "10" },
-      { label: "листопад", code: "11" },
-      { label: "грудень", code: "12" },
+      { label: "Січень", code: "01" },
+      { label: "Лютий", code: "02" },
+      { label: "Березень", code: "03" },
+      { label: "Квітень", code: "04" },
+      { label: "Травень", code: "05" },
+      { label: "Червень", code: "06" },
+      { label: "Липень", code: "07" },
+      { label: "Серпень", code: "08" },
+      { label: "Вересень", code: "09" },
+      { label: "Жовтень", code: "10" },
+      { label: "Листопад", code: "11" },
+      { label: "Грудень", code: "12" },
     ],
     years: [
       { label: "2022", code: "2022" },
@@ -223,10 +338,28 @@ export default {
     osrArray() {
       return this.osrs.map((item) => item.label);
     },
+    filteredOsr() {
+      return this.osrArray.filter((item) => {
+        return (
+          item
+            .toString()
+            .toLowerCase()
+            .indexOf(this.selectedOsr.toLowerCase()) >= 0
+        );
+      });
+    },
   },
   methods: {
+    cleanOsrInput() {
+      this.selectedOsr = "";
+    },
     onSubmit() {
       console.log("Submit");
+    },
+    onInput(event) {
+      const name = event.target.name;
+      this[name].rawValue = event.target._vCleave.getRawValue();
+      this[name].value = event.target._vCleave.getFormattedValue();
     },
   },
 };

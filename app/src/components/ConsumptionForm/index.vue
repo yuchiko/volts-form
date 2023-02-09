@@ -81,7 +81,7 @@ export default {
     background: none;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 50px 60px;
+    padding: 50px 0;
     border: 1px solid #ffffff;
     border-radius: 30px;
   }
@@ -100,18 +100,23 @@ export default {
 }
 
 .select:not(.is-multiple):not(.is-loading)::after {
-  border-color: white !important;
+  border-color: #ffd701 !important;
+}
+
+.autocomplete .control.has-icons-left .icon,
+.autocomplete .control.has-icons-right .icon {
+  height: 50px;
 }
 
 .select:not(.is-multiple):not(.is-loading)::after {
   font-family: "Font Awesome 5 Free";
-  content: "\f0d7"!important;
+  content: "\f0d7" !important;
   font-weight: 900;
-  color: white;
-  border: none!important;
-  transform: translateY(-50%)!important;
-  margin-top: 0!important;
-  height: auto!important;
+  color: #ffd701;
+  border: none !important;
+  transform: translateY(-50%) !important;
+  margin-top: 0 !important;
+  height: auto !important;
 }
 
 .form-col .label {
@@ -120,6 +125,7 @@ export default {
   font-size: 14px;
   margin-bottom: 8px;
   text-align: left;
+  padding-left: 20px;
 }
 
 .form-col .input {
@@ -153,6 +159,10 @@ export default {
   padding-bottom: 0;
 }
 
+.autocomplete .icon {
+  color: #ffd701 !important;
+}
+
 .b-radio.button {
   background: #050505;
   border: 1.5px solid #7f8180;
@@ -161,23 +171,54 @@ export default {
 }
 
 .b-radio.button.is-selected {
-  background-color: #ffd701!important;
-  color: #151516!important;
-  border-color: #ffd701!important;
+  background-color: #ffd701 !important;
+  color: #151516 !important;
+  border-color: #ffd701 !important;
 }
 
 .b-radio.button.is-selected.is-focused {
-  border-color: white!important;
+  border-color: white !important;
+}
+
+.one-radio-group .control .b-radio.button {
+  border-radius: 0 25px 25px 0;
+  height: 50px;
+  font-weight: 500;
+}
+
+.one-radio-group .control:first-child {
+  margin-right: 0 !important;
+}
+
+.one-radio-group .control:first-child .b-radio.button {
+  border-radius: 25px 0 0 25px;
+}
+
+.select:not(.is-multiple),
+.select:not(.is-multiple) select {
+  height: 50px !important;
+}
+
+.select select {
+  border-color: #7f8180 !important;
+}
+
+.input-with-prefix .input-prefix {
+  height: 50px !important;
+  color: black !important;
+  background: #ffd700 !important;
+  border-radius: 0 25px 25px 0;
+  font-size: 12px;
+  font-weight: 600;
 }
 
 // END OF Buefy overrides
-
 
 .form-row {
   display: flex;
   align-items: flex-end;
   margin: 0 -15px;
-  padding: 40px 0;
+  padding: 15px 60px;
 }
 
 .form-col {
@@ -186,6 +227,15 @@ export default {
   padding: 0 15px;
 }
 
+.form-col--2-3 {
+  flex: 0 0 66.66667%;
+  max-width: 66.66667%;
+}
+
+.form-col--full {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
 
 .f-button {
   padding: 12px 50px;
@@ -197,5 +247,8 @@ export default {
   border: 0;
 }
 
-
+.repeated-row {
+  background: #D9D9D91A;
+  padding: 20px 0;
+}
 </style>

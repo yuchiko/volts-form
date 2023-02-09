@@ -21,10 +21,12 @@ export default {
 </script>
 
 <style>
+@import '/fonts/index.css';
+
 @import '~normalize.css';
 @import "~vue-select/dist/vue-select.css";
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Gotham Pro', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -36,6 +38,10 @@ export default {
 body {
   padding: 0;
   background: #020202;
+}
+
+body, button, input, optgroup, select, textarea {
+  font-family: 'Gotham Pro', Helvetica, Arial, sans-serif!important;
 }
 
 * {
