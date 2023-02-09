@@ -5,7 +5,7 @@
         <b-field label="Назва ОСР">
           <b-autocomplete
             rounded
-            v-model="selectedOsr"
+            v-model="inputData.selectedOsr"
             :open-on-focus="true"
             :data="filteredOsr"
             placeholder="Введіть і оберіть вашу ОСР"
@@ -13,9 +13,10 @@
             icon-right="caret-down"
             :clearable="false"
             @select="(option) => (selected = option)"
+            @blur="onBlur"
           >
             <template #footer>
-              <a v-if="selectedOsr.length" @click="cleanOsrInput"
+              <a v-if="inputData.selectedOsr.length" @click="cleanOsrInput"
                 ><span>Очистити поле вводу</span></a
               >
             </template>
@@ -33,7 +34,7 @@
           group-multiline
         >
           <b-radio-button
-            v-model="voltageType"
+            v-model="inputData.voltageType"
             native-value="group_a"
             type="is-light is-outlined"
             expanded
@@ -41,7 +42,7 @@
             <span>1 клас</span>
           </b-radio-button>
           <b-radio-button
-            v-model="voltageType"
+            v-model="inputData.voltageType"
             native-value="group_b"
             type="is-light is-outlined"
             expanded
@@ -53,7 +54,7 @@
       <div class="form-col">
         <b-field class="one-radio-group" label="Група" grouped group-multiline>
           <b-radio-button
-            v-model="groupType"
+            v-model="inputData.groupType"
             native-value="group_a"
             type="is-light is-outlined"
             expanded
@@ -61,7 +62,7 @@
             <span>Група А</span>
           </b-radio-button>
           <b-radio-button
-            v-model="groupType"
+            v-model="inputData.groupType"
             native-value="group_b"
             type="is-light is-outlined"
             expanded
@@ -70,11 +71,16 @@
           </b-radio-button>
         </b-field>
       </div>
-      <div class="form-col input-with-prefix">
+      <div
+        class="form-col input-with-prefix"
+        :class="{
+          'is-filled': !!inputData.amount.value,
+        }"
+      >
         <b-field label="Обсяг">
           <b-input
             name="amount"
-            v-model="amount.value"
+            v-model="inputData.amount.value"
             placeholder="ХХХ ХХХ"
           ></b-input>
           <p class="control">
@@ -90,8 +96,10 @@
 <script>
 export default {
   name: "RepeatedMonthInputs",
+  props: {
+    inputData: [Object]
+  },
   data: () => ({
-    selectedOsr: "",
     osrs: [
       { label: "АТ «ВІННИЦЯОБЛЕНЕРГО»", code: "АТ «ВІННИЦЯОБЛЕНЕРГО»" },
       {
@@ -167,12 +175,6 @@ export default {
         code: "ТОВ «НАФТОГАЗ ТЕПЛО» (м. Новояворівськ)",
       },
     ],
-    groupType: null,
-    voltageType: null,
-    amount: {
-      value: null,
-      rawValue: null,
-    },
   }),
   computed: {
     osrArray() {
@@ -184,16 +186,19 @@ export default {
           item
             .toString()
             .toLowerCase()
-            .indexOf(this.selectedOsr.toLowerCase()) >= 0
+            .indexOf(this.inputData.selectedOsr.toLowerCase()) >= 0
         );
       });
     },
   },
   methods: {
     cleanOsrInput() {
-      this.selectedOsr = "";
+      this.inputData.selectedOsr = "";
     },
-  }
+    onBlur() {
+        if (this.filteredOsr.length === 0) this.inputData.selectedOsr = '';
+        if (this.filteredOsr.length === 1) this.inputData.selectedOsr = this.filteredOsr[0]
+    }
+  },
 };
 </script>
-<style lang="scss"></style>

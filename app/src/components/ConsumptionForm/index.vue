@@ -90,6 +90,10 @@ export default {
 
 <style lang="scss">
 // Buefy overrides
+$plaholder-color: #7f8180;
+$input-color: #fff;
+$input-border: #7F8180;
+$text-color: #FEFEFE;
 
 .select select {
   background: #020202 !important;
@@ -180,9 +184,20 @@ export default {
   border-color: white !important;
 }
 
+.one-radio-group .field-body{
+  padding: 3px;
+  border: 1px solid $input-border;
+  border-radius: 36px;
+  background: #070707;
+}
+
+.one-radio-group .b-radio.button {
+  border-color: transparent;
+}
+
 .one-radio-group .control .b-radio.button {
   border-radius: 0 25px 25px 0;
-  height: 50px;
+  height: calc(50px - 8px);
   font-weight: 500;
 }
 
@@ -192,6 +207,16 @@ export default {
 
 .one-radio-group .control:first-child {
   margin-right: 0 !important;
+}
+
+.one-radio-group .control:first-child .b-radio.button {
+  border-right-color: $input-border;
+  border-left-color: none;
+}
+
+.one-radio-group .control:last-child .b-radio.button {
+  border-right-color: none;
+  border-left-color: $input-border;
 }
 
 .one-radio-group .control:first-child .b-radio.button {
@@ -207,13 +232,37 @@ export default {
   border-color: #7f8180 !important;
 }
 
+.form-col.input-with-prefix input {
+  width: 100%;
+  border-radius: 25px!important;
+  padding-right: 100px!important;
+}
+
+.input-with-prefix .has-addons {
+  position: relative;
+}
+
+.input-with-prefix .control.is-clearfix {
+  width: 100%;
+}
+
 .input-with-prefix .input-prefix {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
   height: 50px !important;
-  color: black !important;
-  background: #ffd700 !important;
+  color: $plaholder-color !important;
+  background: transparent!important;
+  border-color: $input-border!important;
   border-radius: 0 25px 25px 0;
   font-size: 12px;
   font-weight: 600;
+  border-left: none!important;
+}
+
+.input-with-prefix.is-filled .input-prefix {
+  color: white!important;
 }
 
 // END OF Buefy overrides
@@ -242,17 +291,27 @@ export default {
 }
 
 .f-button {
-  padding: 12px 50px;
+  padding: 16px 50px;
   font-size: 16px;
   background: #ffd701;
   color: #151516;
   border-radius: 25px;
   margin: 0;
   border: 0;
+  font-weight: 500;
 }
 
 .repeated-row {
   background: #D9D9D91A;
   padding: 20px 0;
 }
+
+.b-checkbox.checkbox {
+  color: $text-color;
+}
+
+.text-left {
+  text-align: left;
+}
+
 </style>

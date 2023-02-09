@@ -48,36 +48,45 @@
         </b-field>
       </div>
     </div>
-    <RepeatedMonthInputs />
+    <RepeatedMonthInputs
+      v-for="(obj, index) in repeatData"
+      :key="index"
+      :input-data="repeatData[index]"
+    />
     <div class="form-row">
       <div class="form-col">
-          <b-field
-            class="one-radio-group"
-            label="Тип організації"
-            grouped
-            group-multiline
+        <b-field
+          class="one-radio-group"
+          label="Тип організації"
+          grouped
+          group-multiline
+        >
+          <b-radio-button
+            v-model="organizationType"
+            native-value="legal_person"
+            type="is-light is-outlined"
+            expanded
           >
-            <b-radio-button
-              v-model="organizationType"
-              native-value="legal_person"
-              type="is-light is-outlined"
-              expanded
-            >
-              <span>Юр. особа</span>
-            </b-radio-button>
-            <b-radio-button
-              v-model="organizationType"
-              native-value="physic_person"
-              type="is-light is-outlined"
-              expanded
-            >
-              <span>ФОП</span>
-            </b-radio-button>
-          </b-field>
-        </div>
+            <span>Юр. особа</span>
+          </b-radio-button>
+          <b-radio-button
+            v-model="organizationType"
+            native-value="physic_person"
+            type="is-light is-outlined"
+            expanded
+          >
+            <span>ФОП</span>
+          </b-radio-button>
+        </b-field>
+      </div>
       <div class="form-col">
-        <b-field :label="organizationType === 'legal_person' ? 'ЄДРПОУ' : 'ІПН'">
-          <b-input v-model="identify_code" placeholder="x_x_x_x_x_x_x_x"></b-input>
+        <b-field
+          :label="organizationType === 'legal_person' ? 'ЄДРПОУ' : 'ІПН'"
+        >
+          <b-input
+            v-model="identify_code"
+            placeholder="x_x_x_x_x_x_x_x"
+          ></b-input>
         </b-field>
       </div>
       <div class="form-col">
@@ -86,9 +95,14 @@
         </b-field>
       </div>
     </div>
-    <div class="form-row">
-      <div class="form-col">
-        <b-checkbox />
+    <div class="form-row mt-5">
+      <div class="form-col form-col--full text-left">
+        <b-field align="left">
+          <b-checkbox>
+            Натискаючи "Відправити" ви погоджуєтеся на обробку ваших
+            персональних даних</b-checkbox
+          >
+        </b-field>
         <button class="f-button" @click="onSubmit">Відправити</button>
       </div>
     </div>
@@ -136,7 +150,7 @@ export default {
     order_year: null,
     identify_code: null,
     security_code: null,
-    organizationType: 'legal_person',
+    organizationType: "legal_person",
     months: [
       { label: "Січень", code: "01" },
       { label: "Лютий", code: "02" },
@@ -155,6 +169,26 @@ export default {
       { label: "2022", code: "2022" },
       { label: "2023", code: "2023" },
       { label: "2024", code: "2024" },
+    ],
+    repeatDataTemplate: {
+      selectedOsr: "",
+      groupType: null,
+      voltageType: null,
+      amount: {
+        value: null,
+        rawValue: null,
+      },
+    },
+    repeatData: [
+      {
+        selectedOsr: "",
+        groupType: null,
+        voltageType: null,
+        amount: {
+          value: null,
+          rawValue: null,
+        },
+      },
     ],
   }),
   created() {
