@@ -18,15 +18,17 @@
       <div class="form-col">
         <b-field label="Місяць">
           <b-select
-            v-model="order_month"
+            v-model="orderMonth"
             placeholder="Оберіть місяць"
             rounded
             expanded
+            @input="onMonthSelectChange"
           >
             <option
               v-for="month in months"
               :key="month.code"
-              value="month.code"
+              :value="month.code"
+              :disabled="isDisabledMonth(month.code)"
             >
               {{ month.label }}
             </option>
@@ -36,12 +38,13 @@
       <div class="form-col">
         <b-field label="Рік">
           <b-select
-            v-model="order_year"
+            v-model="orderYear"
             placeholder="Оберіть рік"
             rounded
             expanded
+            @input="onYearSelectChange"
           >
-            <option v-for="year in years" :key="year.code" value="year.code">
+            <option v-for="year in years" :key="year.code" :value="year.code">
               {{ year.label }}
             </option>
           </b-select>
@@ -52,6 +55,8 @@
       v-for="(obj, index) in repeatData"
       :key="index"
       :input-data="repeatData[index]"
+      @add-row="onAddRowHandler"
+      :is-last="repeatData.length - 1 === index"
     />
     <div class="form-row">
       <div class="form-col">
@@ -146,29 +151,29 @@ export default {
       },
     },
     order_type: null,
-    order_month: null,
-    order_year: null,
+    orderMonth: null,
+    orderYear: null,
     identify_code: null,
     security_code: null,
     organizationType: "legal_person",
     months: [
-      { label: "Січень", code: "01" },
-      { label: "Лютий", code: "02" },
-      { label: "Березень", code: "03" },
-      { label: "Квітень", code: "04" },
-      { label: "Травень", code: "05" },
-      { label: "Червень", code: "06" },
-      { label: "Липень", code: "07" },
-      { label: "Серпень", code: "08" },
-      { label: "Вересень", code: "09" },
-      { label: "Жовтень", code: "10" },
-      { label: "Листопад", code: "11" },
-      { label: "Грудень", code: "12" },
+      { label: "Січень", code: 1 },
+      { label: "Лютий", code: 2 },
+      { label: "Березень", code: 3 },
+      { label: "Квітень", code: 4 },
+      { label: "Травень", code: 5 },
+      { label: "Червень", code: 6 },
+      { label: "Липень", code: 7 },
+      { label: "Серпень", code: 8 },
+      { label: "Вересень", code: 9 },
+      { label: "Жовтень", code: 10 },
+      { label: "Листопад", code: 11 },
+      { label: "Грудень", code: 12 },
     ],
     years: [
-      { label: "2022", code: "2022" },
-      { label: "2023", code: "2023" },
-      { label: "2024", code: "2024" },
+      { label: "2022", code: 2022 },
+      { label: "2023", code: 2023 },
+      { label: "2024", code: 2024 },
     ],
     repeatDataTemplate: {
       selectedOsr: "",
@@ -192,8 +197,8 @@ export default {
     ],
   }),
   created() {
-    // TODO: generate years
-    // this.years = [];
+    this.generateYears();
+    this.autoPickDateInputs();
   },
   methods: {
     onSubmit() {
@@ -204,6 +209,43 @@ export default {
       this[name].rawValue = event.target._vCleave.getRawValue();
       this[name].value = event.target._vCleave.getFormattedValue();
     },
+    onAddRowHandler() {
+      this.repeatData.push({ ...this.repeatDataTemplate });
+    },
+    onMonthSelectChange() {
+      // console.log(this.orderMonth);
+    },
+    onYearSelectChange() {
+      this.orderMonth = null;
+    },
+    generateYears() {
+      const currentTime = new Date();
+      this.years = [{
+        label: currentTime.getFullYear(),
+        code: currentTime.getFullYear()
+      }];
+      
+      if (currentTime.getMonth() + 1 >= 6) {
+        this.years.push({
+        label: currentTime.getFullYear() + 1,
+        code: currentTime.getFullYear() + 1
+      })
+      }
+    },
+    autoPickDateInputs() {
+      const currentTime = new Date();
+      this.orderMonth = this.months.filter(
+        (item) => item.code === currentTime.getMonth() + 1
+      )[0].code;
+      this.orderYear = this.years.filter(
+        (item) => item.code === currentTime.getFullYear()
+      )[0].code;
+    },
+    isDisabledMonth(monthCode) {
+      const currentTime = new Date();
+      if (!this.orderYear) return false;
+      if (this.orderYear === currentTime.getFullYear() && monthCode < currentTime.getMonth() + 1) return true;
+    }
   },
 };
 </script>

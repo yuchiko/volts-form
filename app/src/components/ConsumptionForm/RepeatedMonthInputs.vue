@@ -91,13 +91,15 @@
         </b-field>
       </div>
     </div>
+    <b-button v-if="isLast" class="add-button" rounded icon-pack="fas" icon-right="plus" @click="$emit('add-row')"/>
   </div>
 </template>
 <script>
 export default {
   name: "RepeatedMonthInputs",
   props: {
-    inputData: [Object]
+    inputData: [Object],
+    isLast: [Boolean]
   },
   data: () => ({
     osrs: [
@@ -202,3 +204,17 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.repeated-row {
+  position: relative;
+  margin-bottom: 10px;
+}
+
+.add-button {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+</style>
