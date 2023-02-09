@@ -186,6 +186,10 @@ export default {
   font-weight: 500;
 }
 
+.one-radio-group .control {
+  flex: 0 0 50%;
+}
+
 .one-radio-group .control:first-child {
   margin-right: 0 !important;
 }
