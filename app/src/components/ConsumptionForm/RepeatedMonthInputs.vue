@@ -200,6 +200,7 @@ export default {
     onBlur() {
         if (this.filteredOsr.length === 0) this.inputData.selectedOsr = '';
         if (this.filteredOsr.length === 1) this.inputData.selectedOsr = this.filteredOsr[0]
+        if (this.filteredOsr.length > 1) this.inputData.selectedOsr = '';
     }
   },
 };

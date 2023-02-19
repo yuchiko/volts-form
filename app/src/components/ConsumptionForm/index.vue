@@ -94,6 +94,7 @@ $plaholder-color: #7f8180;
 $input-color: #fff;
 $input-border: #7F8180;
 $text-color: #FEFEFE;
+$accent-color: #ffd701;
 
 .select select {
   background: #020202 !important;
@@ -308,6 +309,29 @@ $text-color: #FEFEFE;
 
 .b-checkbox.checkbox {
   color: $text-color;
+  transition: all .3s;
+}
+
+.b-checkbox.checkbox:hover {
+  color: $accent-color;
+}
+
+.b-checkbox.checkbox input[type=checkbox] + .check {
+  width: 25px!important;
+  height: 25px!important;
+  border-radius: 0!important;
+  background-size: 80%!important;
+}
+
+.b-checkbox.checkbox input[type=checkbox]:hover + .check,
+.b-checkbox.checkbox input[type=checkbox]:focus + .check {
+  border-color: $accent-color!important;
+}
+
+.b-checkbox.checkbox input[type=checkbox]:checked + .check {
+  background-color: transparent!important;
+  border-color: $accent-color!important;
+  
 }
 
 .text-left {
