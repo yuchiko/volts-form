@@ -55,8 +55,12 @@
       v-for="(obj, index) in repeatData"
       :key="index"
       :input-data="repeatData[index]"
-      @add-row="onAddRowHandler"
       :is-last="repeatData.length - 1 === index"
+      :active="activeRow === index"
+      :num="index+1"
+      @expand="() => {onExpand(index)}"
+      @save="onSave"
+      @add-row="() => { onAddRowHandler(index)}"
     />
     <div class="form-row">
       <div class="form-col">
@@ -114,6 +118,7 @@
   </form>
 </template>
 <script>
+import Vue from 'vue';
 import Cleave from "cleave.js";
 import RepeatedMonthInputs from "./RepeatedMonthInputs";
 
@@ -155,6 +160,7 @@ export default {
     orderYear: null,
     identify_code: null,
     security_code: null,
+    activeRow: 0,
     organizationType: "legal_person",
     months: [
       { label: "Січень", code: 1 },
@@ -209,8 +215,15 @@ export default {
       this[name].rawValue = event.target._vCleave.getRawValue();
       this[name].value = event.target._vCleave.getFormattedValue();
     },
-    onAddRowHandler() {
-      this.repeatData.push({ ...this.repeatDataTemplate });
+    validData(data){
+      console.log('data', data);
+    },
+    onAddRowHandler(i) {
+      if (true || this.validData(this.repeatData[i])) {
+        const rowClone = JSON.parse(JSON.stringify(this.repeatDataTemplate))
+        Vue.set(this.repeatData, i+1, rowClone)
+        this.activeRow = i+1
+      }
     },
     onMonthSelectChange() {
       // console.log(this.orderMonth);
@@ -245,6 +258,12 @@ export default {
       const currentTime = new Date();
       if (!this.orderYear) return false;
       if (this.orderYear === currentTime.getFullYear() && monthCode < currentTime.getMonth() + 1) return true;
+    },
+    onExpand(i) {
+      this.activeRow = i;
+    },
+    onSave() {
+      // Save
     }
   },
 };

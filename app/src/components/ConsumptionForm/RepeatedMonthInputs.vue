@@ -1,5 +1,6 @@
 <template>
-  <div class="repeated-row">
+  <div v-if="active" class="repeated-row">
+    <div class="row-number">{{ num }}</div>
     <div class="form-row">
       <div class="form-col form-col--full">
         <b-field label="Назва ОСР">
@@ -35,7 +36,7 @@
         >
           <b-radio-button
             v-model="inputData.voltageType"
-            native-value="group_a"
+            native-value="class_1"
             type="is-light is-outlined"
             expanded
           >
@@ -43,7 +44,7 @@
           </b-radio-button>
           <b-radio-button
             v-model="inputData.voltageType"
-            native-value="group_b"
+            native-value="class_2"
             type="is-light is-outlined"
             expanded
           >
@@ -93,13 +94,24 @@
     </div>
     <b-button v-if="isLast" class="add-button" rounded icon-pack="fas" icon-right="plus" @click="$emit('add-row')"/>
   </div>
+  <div v-else class="repeated-row repeated-row--expanded">
+    <div class="row-number">{{ num }}</div>
+    <div class="short-information">
+      <div class="full"><span>ОСР:</span> {{ inputData.selectedOsr }}</div>
+      <div><span>Напруга:</span> {{ inputData.voltageType === 'class_1' ? 'Класс 1' : 'Класс 2' }} </div>
+      <div><span>Напруга:</span> {{ inputData.groupType === 'group_a' ? 'Група А' : 'Група Б' }} </div>
+      <div><span>Обсяг:</span> {{ inputData.amount.value }} кВт/місяць</div>
+    </div>
+  </div>
 </template>
 <script>
 export default {
   name: "RepeatedMonthInputs",
   props: {
     inputData: [Object],
-    isLast: [Boolean]
+    isLast: [Boolean],
+    active: [Boolean],
+    num: [Number]
   },
   data: () => ({
     osrs: [
@@ -217,5 +229,45 @@ export default {
   bottom: 0;
   left: 50%;
   transform: translate(-50%, 50%);
+}
+
+.short-information {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 60px;
+  color: #7F8180;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.short-information > div.full {
+  flex: 0 0 100%;
+  text-align: left;
+  padding-bottom: 10px;
+}
+
+.short-information > div:not(.full) {
+  text-align: left;
+}
+
+.short-information > div:not(.full):not(:last-child) {
+  padding-right: 10px;
+  border-right: 2px solid;
+  margin-right: 10px;
+}
+
+.row-number {
+  background: #ffd701;
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  font-weight: 600;
+  line-height: 1;
+  top: 20px;
+  left: 10px;
 }
 </style>
