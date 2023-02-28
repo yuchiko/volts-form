@@ -11,9 +11,11 @@
 
 //  Change on each build
 function load_vuescripts() {
-    wp_enqueue_style( 'vue_wp_styles', plugin_dir_url( __FILE__ ) . 'dist/css/app.fb0c6e1c.css' );
-    wp_register_script( 'vue_wp_compiled', plugin_dir_url( __FILE__ ) . 'dist/js/app.b0168c22.js', true );
-    wp_register_script( 'vue_wp_dependencies', plugin_dir_url( __FILE__ ) . 'dist/js/chunk-vendors.caf87120.js', true );
+    wp_enqueue_style( 'vue_wp_styles', plugin_dir_url( __FILE__ ) . 'dist/css/app.9d1bbfc1.css' );
+    wp_enqueue_style( 'vue_wp_styles_vendors', plugin_dir_url( __FILE__ ) . 'dist/css/chunk-vendors.a0490ac9.css' );
+
+    wp_register_script( 'vue_wp_compiled', plugin_dir_url( __FILE__ ) . 'dist/js/app.e4eecc58.js', true );
+    wp_register_script( 'vue_wp_dependencies', plugin_dir_url( __FILE__ ) . 'dist/js/chunk-vendors.d923bbbc.js', true );
 }
 
 add_action( 'wp_enqueue_scripts', 'load_vuescripts' );

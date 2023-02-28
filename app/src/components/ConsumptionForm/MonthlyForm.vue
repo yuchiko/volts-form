@@ -215,15 +215,15 @@ export default {
       this[name].rawValue = event.target._vCleave.getRawValue();
       this[name].value = event.target._vCleave.getFormattedValue();
     },
-    validData(data){
-      console.log('data', data);
+    validData(){
+      // console.log('data', data);
     },
     onAddRowHandler(i) {
-      if (true || this.validData(this.repeatData[i])) {
+      // if (true || this.validData(this.repeatData[i])) {
         const rowClone = JSON.parse(JSON.stringify(this.repeatDataTemplate))
         Vue.set(this.repeatData, i+1, rowClone)
         this.activeRow = i+1
-      }
+      // }
     },
     onMonthSelectChange() {
       // console.log(this.orderMonth);
